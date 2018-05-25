@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
         session[:user_id] = @existinguser.id
         redirect_to [:products]
       else
-        redirect_to [:new, :sessions]
+        redirect_to '/login'
       end
     end
 

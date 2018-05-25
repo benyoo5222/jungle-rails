@@ -1,13 +1,36 @@
 <section class="orders-show">
 
   <header class="page-header">
-    <h1>Order #<%= @order.id %></h1>
+    <h1>Order #<%= @order.id %> Summary</h1>
   </header>
 
-  <div class="order-summary jumbotron">
-    <h4>Thank you for your order!</h4>
-  </div>
+<div class ="products-index">
+<article class="product">
+  <% @order.line_items.each do |arr| %>
+  <header>
+    <%= image_tag Product.find(arr.product_id).image %>
+    <h4><%= Product.find(arr.product_id).name %></h4>
+  </header>
+  <p class="description">
+    <%= Product.find(arr.product_id).description %>
+  </p>
+  <footer class="actions">
+    Quantity: <%= arr.quantity %>
+  </footer>
+
+  <aside class="price">
+    Price: <%= humanized_money_with_symbol Product.find(arr.product_id).price_cents/100.0 * arr.quantity%>
+  </aside>
+  <% end %>
+  Total for your order today is <%= humanized_money_with_symbol @order.line_items.sum(:total_price_cents)/100.00 %>. This will be sent to your email: <%= @order.email %>
+</article>
+</div>
 
   <%= link_to "Continue Shopping", root_path, class: 'btn btn-lg btn-primary' %>
 
 </section>
+
+
+
+
+
