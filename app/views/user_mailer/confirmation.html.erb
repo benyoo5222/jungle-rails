@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p> Thank you for shopping at Jungle! </p>
+
+    <% @order.line_items.each do |arr| %>
+
+    <p><%= Product.find(arr.product_id).name %></p>
+    <p><%= Product.find(arr.product_id).description %></p>
+    <p>Quantity: <%= arr.quantity %> </p>
+    <p>Price per unit: <%= humanized_money_with_symbol Product.find(arr.product_id).price_cents/100.0 * arr.quantity%></p>
+    <% end %>
+
+
+    Total for your order today is <%= humanized_money_with_symbol @order.line_items.sum(:total_price_cents)/100.00 %>.
+  </body>
+</html>
