@@ -1,4 +1,7 @@
-class Admin::ProductsController < ApplicationController
+class Admin::ProductsController < AuthenticationController
+
+  before_action :auto_signin
+
 
   def index
     @products = Product.order(id: :desc).all

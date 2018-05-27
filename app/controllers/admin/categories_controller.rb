@@ -1,4 +1,5 @@
-class Admin::CategoriesController < ApplicationController
+class Admin::CategoriesController < AuthenticationController
+  before_action :auto_signin
 
   def index
     @categories = Category.order(id: :desc).all
