@@ -37,7 +37,7 @@
     <div class="col-xs-12">
       <%= form_tag orders_path do %>
 
-        <% if session[:user_id] %>
+        <% if cart.length > 0 && session[:user_id] %>
         <script
           src="https://checkout.stripe.com/checkout.js" class="stripe-button"
           data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
@@ -48,8 +48,10 @@
           data-email= <%= User.find(session[:user_id]).email %>
           data-currency="cad">
         </script>
+        <% elsif cart.length == 0 %>
+          <%= link_to 'Products', [:products] %> Please select an item first.
         <% else %>
-          <%= link_to 'Log in',  '/login' %> Please Log in First
+          <%= link_to 'Log in', '/login'%> Please log in first.
         <% end %>
       <% end %>
     </div>
